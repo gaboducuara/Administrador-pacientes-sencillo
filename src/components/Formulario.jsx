@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from "react";
+import { v4 as uuidv4 } from 'uuid';
 
-const Formulario = () => {
+const Formulario = ({crearCita}) => {
   // Crear State de Citas
   const [cita, actualizarCita] = useState({
     mascota: "",
@@ -9,6 +10,7 @@ const Formulario = () => {
     hora: "",
     sintomas: "",
   });
+  const [error, actualizarError] = useState(false);
 
   // Funcion que se ejecuta cada que el usuario escribe un input
   const actualizarState = e => {
@@ -22,22 +24,32 @@ const Formulario = () => {
   //Extraer los valores del useState (cita / actualizarCita)
   const {mascota, propietario , fecha, hora, sintomas}  = cita;
   //Cuando el usuario presiona agregar cita o enviar formulario
+
   const submitCita = e => {
     e.preventDefault();
 
-    console.log(mascota);
-
     // Validar 
-    if(mascota.trim() === '') {
-      console.log('hay un error LOl')
-    }
+    if(mascota.trim() === '' || propietario.trim() === '' || fecha.trim() === '' || hora.trim() === '' || sintomas.trim() === '') {
+      console.log('hay un error');
+      actualizarError(true);
+      return;
+    };
 
+    //Eliminar el mensaje previo
+    actualizarError(false);
 
-    //Asignar un Id
-
+    //Asignar un ID
+    cita.id = uuidv4();
     //Crear la cita
-
+    crearCita(cita);
     //Reiniciar el Form
+    actualizarCita({
+    mascota: "",
+    propietario: "",
+    fecha: "",
+    hora: "",
+    sintomas: "",
+    })
 
     console.log('enviando form');
   }
@@ -45,6 +57,8 @@ const Formulario = () => {
   return (
     <Fragment>
       <h2>Crear cita</h2>
+
+      {error ? <p className="alerta-error">Todos los campos son obligatorios</p>  :null}
 
       <form
         onSubmit={submitCita}
@@ -94,11 +108,12 @@ const Formulario = () => {
           onChange={actualizarState}
           value={sintomas}
         ></textarea>
-      </form>
 
       <button type="submit" className="u-full-width button-primary">
         Agregar Cita
       </button>
+
+      </form>
     </Fragment>
   );
 };

@@ -54,14 +54,31 @@ input[type="time"] {
     box-shadow: none;
 }
 
-.cita p {
+.cita {
+    padding: 2rem;
+    background: white;
+    border-bottom: 1px solid #e1e1e1;
+    color: black;
+  }
+  
+  .cita p {
+    font-weight: bold;
+    margin-bottom: .8rem;
+  }  
+
+.cita p span {
     font-weight: normal;
 }
 
 .cita:first-of-type {
-    border-bottom-left-radius: 1rem;
+    border-top-left-radius: 1rem;
     border-top-right-radius: 1rem;
-}
+  }
+  
+.cita:last-of-type {
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+  }  
 
 .button.eliminar, 
 .button.eliminar:hover {
@@ -78,4 +95,4 @@ input[type="time"] {
     text-transform: uppercase;
     text-align: center;
     font-family: 'Staatliches', cursive;
-}
+};
